@@ -10,7 +10,6 @@ if (preg_match('/^\/admin\/news$/', $requestUri)) {
   // Route: Xóa tin tức với id
 } elseif (preg_match('/^\/admin\/news\/delete\?id=(\d+)$/', $requestUri, $matches)) {
   $id = $matches[1]; // Lấy id từ route động
-  echo "<h1>Haha</h1>";
 
   require_once __DIR__ . '/controllers/NewsController.php';
   $controller = new NewsController();
