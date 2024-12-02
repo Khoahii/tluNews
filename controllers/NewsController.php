@@ -10,6 +10,7 @@ class NewsController
     $this->newsModel = new News();
   }
 
+  //-show các bài báo
   public function index()
   {
     try {
@@ -32,5 +33,32 @@ class NewsController
 
     // Truyền dữ liệu vào view
     require __DIR__ . '/../views/admin/news/index.php';
+  }
+
+  //-xóa 1 bài báo theo id gửi lên
+  public function deleteNews($id)
+  {
+    // Kiểm tra id hợp lệ
+    if (!is_numeric($id) || $id <= 0) {
+      echo "ID không hợp lệ.";
+      return;
+    }
+
+    try {
+      // Gọi phương thức delete từ model
+      if ($this->newsModel->deleteNews($id)) {
+        // Nếu xóa thành công, thông báo và chuyển hướng về trang danh sách
+        echo "Bài báo đã được xóa thành công.";
+        // Redirect hoặc chuyển hướng về trang danh sách tin tức
+        header("Location: /admin/news");
+        exit;
+      } else {
+        // Nếu không xóa được, thông báo lỗi
+        echo "Xóa bài báo thất bại.";
+      }
+    } catch (Exception $e) {
+      // Xử lý lỗi nếu có
+      echo "Có lỗi xảy ra: " . $e->getMessage();
+    }
   }
 }

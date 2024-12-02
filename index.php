@@ -10,14 +10,12 @@ if (preg_match('/^\/admin\/news$/', $requestUri)) {
   // Route: Xóa tin tức với id
 } elseif (preg_match('/^\/admin\/news\/delete\?id=(\d+)$/', $requestUri, $matches)) {
   $id = $matches[1]; // Lấy id từ route động
-  echo "<h1>Haha</h1>";
 
-  // Gọi Controller (nếu cần)
-  // require_once __DIR__ . '/controllers/NewsController.php';
-  // $controller = new NewsController();
-  // $controller->delete($id);
+  require_once __DIR__ . '/controllers/NewsController.php';
+  $controller = new NewsController();
+  $controller->deleteNews($id);
 
-  // Route mặc định
+  // Route mặc định là ở trang dashboard.php(admin): sau sửa lại là ở trang login
 } else {
   require_once 'views/admin/dashboard.php';
 }

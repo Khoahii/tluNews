@@ -26,4 +26,24 @@ class News extends BaseModel
     $stmt->execute();
     return $stmt->fetch();  // Dùng fetch() thay vì fetchAll() nếu chỉ muốn lấy 1 bản ghi
   }
+
+  public function deleteNews($id)
+  {
+    try {
+      $sql = "DELETE FROM news WHERE id = :id";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+      if ($stmt->execute()) {
+        return true; // Xóa thành công
+      } else {
+        return false; // Xóa thất bại
+      }
+    } catch (PDOException $e) {
+      // Log lỗi hoặc hiển thị thông báo
+      echo "Lỗi: " . $e->getMessage();
+      return false;
+    }
+  }
+
 }
