@@ -156,7 +156,7 @@
               <td><img src="<?php echo htmlspecialchars($news['image']); ?>" alt="Hình ảnh tin tức" style="width: 100px; height: auto;" /></td>
               <td>
                 <a href="edit.php?id=<?php echo $news['id']; ?>">Chỉnh Sửa</a> |
-                <a href="delete.php?id=<?php echo $news['id']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')">Xóa</a>
+                <a href="/admin/news/delete?id=<?php echo $news['id']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')">Xóa</a>
               </td>
             </tr>
           <?php endforeach; ?>

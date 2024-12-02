@@ -1,25 +1,25 @@
 <?php
-
 $requestUri = $_SERVER['REQUEST_URI'];
 
-switch ($requestUri) {
-//-start routes admin
-  case '/admin/news':
-    // Bao gồm controller NewsController
-    require_once __DIR__ . '/controllers/NewsController.php';
+// Route: Hiển thị danh sách tin tức
+if (preg_match('/^\/admin\/news$/', $requestUri)) {
+  require_once __DIR__ . '/controllers/NewsController.php';
+  $controller = new NewsController();
+  $controller->index();
 
-    // Tạo đối tượng NewsController và gọi phương thức index
-    $controller = new NewsController();
-    $controller->index();
-    break;
+  // Route: Xóa tin tức với id
+} elseif (preg_match('/^\/admin\/news\/delete\?id=(\d+)$/', $requestUri, $matches)) {
+  $id = $matches[1]; // Lấy id từ route động
+  echo "<h1>Haha</h1>";
 
-//-end routes admin
+  // Gọi Controller (nếu cần)
+  // require_once __DIR__ . '/controllers/NewsController.php';
+  // $controller = new NewsController();
+  // $controller->delete($id);
 
-//-start routes client
-
-//-end routes client
-
-  default:
-    require_once 'views/admin/dashboard.php';
-    break;
+  // Route mặc định
+} else {
+  require_once 'views/admin/dashboard.php';
 }
+
+?>
