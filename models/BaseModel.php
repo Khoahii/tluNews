@@ -24,7 +24,7 @@ class BaseModel
       $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
       // In ra thông báo nếu kết nối thành công
-      echo "Kết nối thành công\n";
+      // echo "Kết nối thành công\n";
     } catch (PDOException $e) {
       // Xử lý lỗi khi không kết nối được
       die("Kết nối thất bại: " . $e->getMessage());
