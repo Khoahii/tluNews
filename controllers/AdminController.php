@@ -15,10 +15,6 @@ switch ($action) {
     break;
   
   default:
-    
-    $user = new Userr();
-    $dataUser = $user->getUser(1);
-    require_once '../views/admin/dashboard.php';
     break;
 }
 ?>

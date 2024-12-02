@@ -1,20 +1,20 @@
 <?php
-//- connect database
-require_once "config/database.php";
 
-//- lay ra url
-$controller = $_GET['controller'] ?? "";
+$requestUri = $_SERVER['REQUEST_URI'];
 
-echo $controller;
+switch ($requestUri) {
+  case '/admin/news':
+    // Bao gồm controller NewsController
+    require_once __DIR__ . '/controllers/NewsController.php';
 
-//-check admin hay client
-switch ($controller) {
-  case 'admin':
-    require_once 'views/admin/dashboard.php';
+    // Tạo đối tượng NewsController và gọi phương thức index
+    $controller = new NewsController();
+    $controller->index();
     break;
   
   default:
     require_once 'views/admin/dashboard.php';
     break;
 }
+
 ?>
