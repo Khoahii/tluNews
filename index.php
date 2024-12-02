@@ -15,13 +15,14 @@ if ($requestUri === '/admin/news') {
   $controller = new NewsController();
   $controller->deleteNews($id);
 
-  // Route mặc định là ở trang dashboard.php(admin): sau sửa lại là ở trang login
+  //-route thêm
 } else if($requestUri === '/admin/news/add'){
   require_once __DIR__ . '/controllers/NewsController.php';
   $controller = new NewsController();
   $controller->addNews();
 }
 
+// Route mặc định là ở trang dashboard.php(admin): sau sửa lại là ở trang login
 else {
   require_once 'views/admin/dashboard.php';
 }
