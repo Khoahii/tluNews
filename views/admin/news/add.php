@@ -80,7 +80,7 @@
       color: white;
       text-align: center;
       padding: 15px;
-      position: fixed;
+      /* position: fixed; */
       width: 100%;
       bottom: 0;
     }
@@ -94,7 +94,7 @@
 
   <div class="container">
     <h2>Nhập Thông Tin Tin Tức</h2>
-    <form action="#" method="POST">
+    <form action="/admin/news/add" method="POST" enctype="multipart/form-data">
       <div class="form-group">
         <label for="title">Tiêu đề</label>
         <input type="text" id="title" name="title" required>
@@ -104,8 +104,19 @@
         <textarea id="content" name="content" required></textarea>
       </div>
       <div class="form-group">
+        <label for="category_id">Danh Mục</label>
+        <select id="category_id" name="category_id">
+          <option value="1">Kinh tế</option>
+          <option value="2">Giải trí</option>
+          <option value="3">Thể thao</option>
+          <option value="4">Công nghệ</option>
+          <option value="5">Giáo dục</option>
+        </select>
+      </div>
+
+      <div class="form-group">
         <label for="image">Chọn ảnh</label>
-        <input type="file"/>
+        <input type="file" name="image" id="image" />
       </div>
       <div class="form-group">
         <button type="submit" class="btn-submit">Thêm Tin Tức</button>

@@ -2,7 +2,7 @@
 $requestUri = $_SERVER['REQUEST_URI'];
 
 // Route: Hiển thị danh sách tin tức
-if (preg_match('/^\/admin\/news$/', $requestUri)) {
+if ($requestUri === '/admin/news') {
   require_once __DIR__ . '/controllers/NewsController.php';
   $controller = new NewsController();
   $controller->index();
@@ -16,7 +16,13 @@ if (preg_match('/^\/admin\/news$/', $requestUri)) {
   $controller->deleteNews($id);
 
   // Route mặc định là ở trang dashboard.php(admin): sau sửa lại là ở trang login
-} else {
+} else if($requestUri === '/admin/news/add'){
+  require_once __DIR__ . '/controllers/NewsController.php';
+  $controller = new NewsController();
+  $controller->addNews();
+}
+
+else {
   require_once 'views/admin/dashboard.php';
 }
 

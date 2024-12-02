@@ -27,6 +27,36 @@ class News extends BaseModel
     return $stmt->fetch();  // Dùng fetch() thay vì fetchAll() nếu chỉ muốn lấy 1 bản ghi
   }
 
+  //-them 1 baif baos
+  public function addNews($data)
+  {
+    try {
+      // Chuẩn bị câu truy vấn với các tham số
+      $sql = "INSERT INTO news (title, content, image, created_at, category_id) 
+                VALUES (:title, :content, :image, NOW(), :category_id)";
+
+      $stmt = $this->conn->prepare($sql);
+
+      // Liên kết các tham số
+      $stmt->bindParam(':title', $data->title);
+      $stmt->bindParam(':content', $data->content);
+      $stmt->bindParam(':image', $data->image);
+      $stmt->bindParam(':category_id', $data->category_id);
+
+      // Thực thi câu lệnh
+      if ($stmt->execute()) {
+        return true; // Thêm thành công
+      } else {
+        return false; // Thêm thất bại
+      }
+    } catch (PDOException $e) {
+      // Log lỗi hoặc hiển thị thông báo
+      echo "Lỗi: " . $e->getMessage();
+      return false;
+    }
+  }
+
+
   public function deleteNews($id)
   {
     try {
