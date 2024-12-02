@@ -1,11 +1,20 @@
 <?php
-// Bao gồm file User.php
-require_once __DIR__ . '/models/User.php';
+//- connect database
+require_once "config/database.php";
 
-require_once 'models/User.php';
+//- lay ra url
+$controller = $_GET['controller'] ?? "";
 
-$userModel = new Userr();
+echo $controller;
 
-print_r($userModel->getAllUsers());
-
+//-check admin hay client
+switch ($controller) {
+  case 'admin':
+    require_once 'views/admin/dashboard.php';
+    break;
+  
+  default:
+    require_once 'views/admin/dashboard.php';
+    break;
+}
 ?>

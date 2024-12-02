@@ -17,6 +17,8 @@ try {
 
   // Dữ liệu truy vấn mặc định trả về dạng mảng kết hợp
   $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+  // echo "success\n";
 } catch (PDOException $e) {
   // Xử lý lỗi khi không kết nối được
   die("Kết nối thất bại: " . $e->getMessage());
