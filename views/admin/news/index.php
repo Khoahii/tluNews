@@ -8,83 +8,124 @@
   <link rel="stylesheet" href="#">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
       margin: 0;
       padding: 0;
+      color: #333;
     }
 
     header {
-      background-color: #333;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
       color: white;
-      padding: 15px 0;
+      padding: 20px 0;
       text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    header h1 {
+      font-size: 36px;
+      margin: 0;
     }
 
     .container {
-      max-width: 800px;
-      margin: 20px auto;
-      padding: 20px;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px;
       background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
     }
 
     h2 {
-      font-size: 28px;
+      font-size: 30px;
       margin-bottom: 20px;
       color: #333;
     }
 
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 16px;
-      margin-bottom: 5px;
-    }
-
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
-    }
-
-    .form-group textarea {
-      height: 150px;
-    }
-
     .btn-submit {
-      padding: 10px 20px;
-      background-color: #007bff;
+      display: inline-block;
+      padding: 12px 25px;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
       color: white;
       font-size: 16px;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.3s, background 0.3s;
     }
 
     .btn-submit:hover {
-      background-color: #0056b3;
+      background: linear-gradient(to right, #2575fc, #6a11cb);
+      transform: scale(1.05);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table thead {
+      background: #6a11cb;
+      color: white;
+    }
+
+    table th,
+    table td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    table th {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    table tbody tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    table img {
+      border-radius: 8px;
+      transition: transform 0.3s;
+    }
+
+    table img:hover {
+      transform: scale(1.1);
+    }
+
+    table a {
+      color: #6a11cb;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    table a:hover {
+      color: #2575fc;
     }
 
     footer {
-      background-color: #333;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
       color: white;
       text-align: center;
-      padding: 15px;
+      padding: 20px;
       position: fixed;
       width: 100%;
       bottom: 0;
+      box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 16px;
     }
   </style>
+
 </head>
 
 <body>
@@ -94,29 +135,36 @@
 
   <div class="container">
     <h2>Quản Lý Tin Tức</h2>
-    <a href="#" class="btn-submit">Thêm Tin Tức Mới</a>
+    <a href="/views/admin/news/add.php" class="btn-submit">Thêm Tin Tức Mới</a>
 
     <table>
       <thead>
         <tr>
           <th>Tiêu Đề</th>
-          <th>Danh Mục</th>
-          <th>Ngày Tạo</th>
+          <th>Nội Dung</th>
+          <th>Hình Ảnh</th>
           <th>Hành Động</th>
         </tr>
       </thead>
       <tbody>
-        <!-- Dữ liệu sẽ được lấy từ cơ sở dữ liệu -->
-        <tr>
-          <td>Tiêu đề bài viết 1</td>
-          <td>Tin Tức</td>
-          <td>01/12/2024</td>
-          <td>
-            <a href="edit.php?id=1">Chỉnh Sửa</a> |
-            <a href="delete.php?id=1" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')">Xóa</a>
-          </td>
-        </tr>
-        <!-- Thêm các bài viết khác -->
+        <!-- Kiểm tra xem $newsList có phải là mảng không trước khi lặp qua -->
+        <?php if (is_array($newsList) && !empty($newsList)): ?>
+          <?php foreach ($newsList as $news): ?>
+            <tr>
+              <td><?php echo htmlspecialchars($news['title']); ?></td>
+              <td><?php echo htmlspecialchars($news['content']); ?></td>
+              <td><img src="<?php echo htmlspecialchars($news['image']); ?>" alt="Hình ảnh tin tức" style="width: 100px; height: auto;" /></td>
+              <td>
+                <a href="edit.php?id=<?php echo $news['id']; ?>">Chỉnh Sửa</a> |
+                <a href="delete.php?id=<?php echo $news['id']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')">Xóa</a>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <tr>
+            <td colspan="4">Không có dữ liệu.</td>
+          </tr>
+        <?php endif; ?>
       </tbody>
     </table>
   </div>

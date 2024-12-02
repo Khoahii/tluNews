@@ -3,10 +3,16 @@ require_once 'BaseModel.php'; // Kế thừa BaseModel
 
 class News extends BaseModel
 {
+
+  public function __construct()
+  {
+    parent::__construct();
+  }
+
   public function getAllNews()
   {
     $sql = "SELECT * FROM news";
-    $stmt = $this->pdo->prepare($sql);
+    $stmt = $this->conn->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll(); // Trả về tất cả người dùng
   }
@@ -14,10 +20,10 @@ class News extends BaseModel
 
   public function getNews($id)
   {
-    $sql = "SELECT * FROM news WHERE id = :id"; // Sử dụng placeholder để bảo mật
-    $stmt = $this->pdo->prepare($sql); // Chuẩn bị câu lệnh SQL
-    $stmt->bindParam(':id', $id, PDO::PARAM_INT); // Ràng buộc giá trị $id với kiểu INT
-    $stmt->execute(); // Thực thi câu lệnh
-    return $stmt->fetchAll();
+    $sql = "SELECT * FROM news WHERE id = :id";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetch();  // Dùng fetch() thay vì fetchAll() nếu chỉ muốn lấy 1 bản ghi
   }
 }

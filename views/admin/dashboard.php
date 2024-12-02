@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -108,6 +106,7 @@
       bottom: 0;
     }
   </style>
+
 </head>
 
 <body>
@@ -116,8 +115,8 @@
   </header>
 
   <nav>
-    <a href="views/admin/dashboard.php">Trang chủ</a>
-    <a href="views/admin/news/index.php">Tin tức</a>
+    <a href="/views/admin/dashboard.php">Trang chủ</a>
+    <a href="/admin/news">Tin tức</a>
     <a href="#">Quản lý người dùng</a>
     <a href="#">Cài đặt</a>
     <a href="#">Thoát</a>
@@ -163,7 +162,7 @@
     </div>
 
     <!-- Nút thêm tin tức mới -->
-    <a href="views/admin/news/add.php" class="btn-add">Thêm Tin Tức Mới</a>
+    <a href="/views/admin/news/add.php" class="btn-add">Thêm Tin Tức Mới</a>
 
   </div>
 
