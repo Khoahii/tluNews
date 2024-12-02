@@ -76,4 +76,39 @@ class News extends BaseModel
     }
   }
 
+  public function updateNews($data)
+  {
+    try {
+      // Chuẩn bị câu truy vấn để cập nhật tin tức
+      $sql = "UPDATE news SET 
+                title = :title, 
+                content = :content, 
+                image = :image, 
+                category_id = :category_id 
+                WHERE id = :id";
+
+      $stmt = $this->conn->prepare($sql);
+
+      // Liên kết các tham số
+      $stmt->bindParam(':title', $data->title);
+      $stmt->bindParam(':content', $data->content);
+      $stmt->bindParam(':image', $data->image);
+      $stmt->bindParam(':category_id', $data->category_id);
+      $stmt->bindParam(':id', $data->id, PDO::PARAM_INT); // Cập nhật bằng id từ đối tượng $data
+
+      // Thực thi câu lệnh
+      if ($stmt->execute()) {
+        return true; // Cập nhật thành công
+      } else {
+        return false; // Cập nhật thất bại
+      }
+    } catch (PDOException $e) {
+      // Log lỗi hoặc hiển thị thông báo
+      echo "Lỗi: " . $e->getMessage();
+      return false;
+    }
+  }
+
+
+
 }

@@ -81,6 +81,74 @@ class NewsController
     }
   }
 
+  // Cập nhật tin tức
+  public function updateNews($id)
+  {
+    // Kiểm tra id hợp lệ
+    if (!is_numeric($id) || $id <= 0) {
+      echo "ID không hợp lệ.";
+      return;
+    }
+
+    // Lấy thông tin bài báo cần cập nhật từ model
+    $newModel = new News();
+    $new = $newModel->getNews($id);
+
+    // Kiểm tra xem bài báo có tồn tại không
+    if (!$new) {
+      echo "Bài báo không tồn tại.";
+      return;
+    }
+
+    // Kiểm tra xem có phải là POST request không
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      // Lấy dữ liệu từ form
+      $title = $_POST['title'];
+      $content = $_POST['content'];
+      $category_id = $_POST['category_id'];  // Giả sử có thêm category_id trong form
+
+      // Giữ nguyên ảnh cũ nếu không có ảnh mới
+      $imagePath = $new['image'];  // Giữ nguyên ảnh cũ mặc định
+
+      if ($_FILES['image']['error'] != UPLOAD_ERR_NO_FILE) {
+        // Nếu có ảnh mới, cập nhật ảnh
+        $imageDir = __DIR__ . '/../images';
+        if (!is_dir($imageDir)) {
+          mkdir($imageDir, 0777, true); // Tạo thư mục nếu chưa có
+        }
+
+        // Tạo đường dẫn mới cho ảnh
+        $imagePath = $imageDir . '/' . basename($_FILES['image']['name']);
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
+          // Cập nhật đường dẫn ảnh vào cơ sở dữ liệu
+          $imagePath = '../../../images/' . basename($_FILES['image']['name']);
+        } else {
+          echo "Lỗi khi di chuyển tệp tin ảnh!";
+          return;
+        }
+      }
+
+      // Tạo đối tượng dữ liệu
+      $data = new stdClass();
+      $data->id = $id;
+      $data->title = $title;
+      $data->content = $content;
+      $data->image = $imagePath; // Cập nhật ảnh mới hoặc giữ ảnh cũ
+      $data->category_id = $category_id; // Cập nhật category_id nếu có
+
+      // Gọi hàm updateNews từ model để cập nhật tin tức
+      if ($newModel->updateNews($data)) {
+        // Nếu cập nhật thành công, chuyển hướng về trang danh sách tin tức
+        header("Location: /admin/news");
+        exit();
+      } else {
+        echo "Cập nhật bài báo thất bại.";
+      }
+    }
+  }
+
+
+
 
   //-xóa 1 bài báo theo id gửi lên
   public function deleteNews($id)

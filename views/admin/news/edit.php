@@ -1,10 +1,21 @@
+<?php
+include_once "../../../models/News.php";
+// Nhận ID gửi lên
+$id = $_GET['id'];
+
+$newModel = new News();
+$new = $newModel->getNews($id);
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="vi">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thêm Tin Tức Mới</title>
+  <title>Chỉnh Sửa Tin Tức</title>
   <link rel="stylesheet" href="">
   <style>
     body {
@@ -80,7 +91,7 @@
       color: white;
       text-align: center;
       padding: 15px;
-      position: fixed;
+      /* position: fixed; */
       width: 100%;
       bottom: 0;
     }
@@ -94,19 +105,29 @@
 
   <div class="container">
     <h2>Sửa Thông Tin Tin Tức</h2>
-    <form action="#" method="POST">
+    <form action="/admin/news/edit?id=<?php echo $new['id']; ?>" method="POST" enctype="multipart/form-data">
       <div class="form-group">
         <label for="title">Tiêu đề</label>
-        <input type="text" id="title" name="title" required>
+        <input type="text" id="title" name="title" value="<?php echo ($new['title']); ?>">
       </div>
       <div class="form-group">
         <label for="content">Nội Dung</label>
-        <textarea id="content" name="content" required></textarea>
+        <textarea id="content" name="content"><?php echo ($new['content']); ?></textarea>
+      </div>
+      <div class="form-group">
+        <label for="category_id">Danh Mục</label>
+        <select id="category_id" name="category_id">
+          <option value="1" <?php echo ($new['category_id'] == 1) ? 'selected' : ''; ?>>Kinh tế</option>
+          <option value="2" <?php echo ($new['category_id'] == 2) ? 'selected' : ''; ?>>Giải trí</option>
+          <option value="3" <?php echo ($new['category_id'] == 3) ? 'selected' : ''; ?>>Thể thao</option>
+          <option value="4" <?php echo ($new['category_id'] == 4) ? 'selected' : ''; ?>>Công nghệ</option>
+          <option value="5" <?php echo ($new['category_id'] == 5) ? 'selected' : ''; ?>>Giáo dục</option>
+        </select>
       </div>
       <div class="form-group">
         <label for="image">Chọn ảnh</label>
-        <img src="" alt="No image"/>
-        <input type="file" />
+        <img src="<?php echo ($new['image']); ?>" alt="No image" />
+        <input type="file" name="image" />
       </div>
       <div class="form-group">
         <button type="submit" class="btn-submit">Sửa Tin Tức</button>
