@@ -1,31 +1,30 @@
 <?php
-require_once 'BaseModel.php'; // Kế thừa BaseModel
+require_once 'config.php';
 
-class Userr extends BaseModel
-{
+class User {
+    private $db;
 
-  public function __construct()
-  {
-    parent::__construct();
-  }
+    public function __construct() {
+        try {
+            $this->db = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
+            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            die("Kết nối cơ sở dữ liệu thất bại: " . $e->getMessage());
+        }
+    }
 
-  public function getAllUsers()
-  {
-    $sql = "SELECT * FROM users";
-    $stmt = $this->conn->prepare($sql);
-    $stmt->execute();
-    return $stmt->fetchAll(); // Trả về tất cả người dùng
-  }
+    // Kiểm tra thông tin đăng nhập
+    public function login($username, $password) {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE username = :username AND role = 1");
+        $stmt->execute(['username' => $username]);
+        $user = $stmt->fetch();
 
+        // So sánh mật khẩu trực tiếp
+        if ($user && $user['password'] === $password) {
+            return $user; // Trả về thông tin người dùng nếu đúng
+        }
+        return false; // Sai thông tin
+    }
 
-  public function getUser($id)
-  {
-    $sql = "SELECT * FROM users WHERE id = :id"; // Sử dụng placeholder để bảo mật
-    $stmt = $this->conn->prepare($sql); // Chuẩn bị câu lệnh SQL
-    $stmt->bindParam(':id', $id, PDO::PARAM_INT); // Ràng buộc giá trị $id với kiểu INT
-    $stmt->execute(); // Thực thi câu lệnh
-    return $stmt->fetch();
-  }
-
-  
 }
