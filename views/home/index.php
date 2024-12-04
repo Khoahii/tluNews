@@ -131,29 +131,17 @@ footer p {
   <div class="content">
     <h2>Tin Tức Mới Nhất</h2>
 
-    <div class="news-item">
-      <img src="#" alt="News Image 1">
-      <div>
-        <h2><a href="#">Tiêu đề bài viết 1</a></h2>
-        <p>Đây là đoạn mô tả ngắn về bài viết đầu tiên. Nó cung cấp cái nhìn tổng quan về nội dung bài viết.</p>
-      </div>
-    </div>
-
-    <div class="news-item">
-      <img src="#" alt="News Image 2">
-      <div>
-        <h2><a href="#">Tiêu đề bài viết 2</a></h2>
-        <p>Đoạn mô tả ngắn về bài viết thứ hai. Đây là thông tin về một tin tức khác rất hấp dẫn.</p>
-      </div>
-    </div>
-
-    <div class="news-item">
-      <img src="#" alt="News Image 3">
-      <div>
-        <h2><a href="#">Tiêu đề bài viết 3</a></h2>
-        <p>Thông tin ngắn gọn về bài viết thứ ba, với nội dung mới nhất và cập nhật nhất.</p>
-      </div>
-    </div>
+    <div class="content">
+    <h1>Danh Sách Tin Tức</h1>
+    <?php if (!empty($news)): ?>
+        <h1><?php echo htmlspecialchars($news['title']); ?></h1>
+        <p><?php echo htmlspecialchars($news['content']); ?></p>
+        <img src="<?php echo htmlspecialchars($news['image']); ?>" alt="Hình ảnh tin tức">
+    <?php else: ?>
+        <p>Không tìm thấy tin tức!</p>
+    <?php endif; ?>
+    <a href="/">Quay lại danh sách</a>
+  </div>
   </div>
 
   <footer>

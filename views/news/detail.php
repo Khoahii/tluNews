@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi">
+<!-- <<<<<<< HEAD -->
+
 
 <head>
   <meta charset="UTF-8">
@@ -133,17 +135,22 @@ footer p {
   </header>
 
   <div class="content">
-    <div class="news-detail">
-      <img src="#" alt="News Image">
-      <h1>Tiêu đề bài viết</h1>
-      <p>Đây là nội dung chi tiết của bài viết tin tức. Nội dung này có thể dài và có thể bao gồm nhiều đoạn văn, hình ảnh, và các thông tin bổ sung. Nội dung bài viết có thể giải thích về sự kiện, vấn đề xã hội, công nghệ, v.v.</p>
-      <p>Thêm nội dung chi tiết của bài viết ở đây. Có thể bao gồm các đoạn văn dài, trích dẫn, thông tin phân tích, v.v. Nội dung này sẽ cung cấp cái nhìn sâu sắc hơn cho người đọc về chủ đề mà bài viết đề cập.</p>
+  <div class="content">
+  <ul>
+        <?php if (!empty($newsList)): ?>
+            <?php foreach ($newsList as $news): ?>
+                <li>
+                    <a href="/?action=detail&id=<?php echo $news['id']; ?>">
+                        <?php echo htmlspecialchars($news['title']); ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <li>Không có tin tức nào!</li>
+        <?php endif; ?>
+    </ul>
+  </div>
 
-      <div class="info">
-        <span><strong>Ngày đăng:</strong> 02/12/2024</span>
-        <span><strong>Danh mục:</strong> Công nghệ</span>
-      </div>
-    </div>
   </div>
 
   <footer>
